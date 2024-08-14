@@ -3,6 +3,11 @@ import { getStartDate, getTimeRange } from "@/utils/getDate";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const GET = async () => {
   const supabase = createClient();
@@ -28,7 +33,7 @@ export const GET = async () => {
     }
 
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
-      return dayjs().subtract(i, "day").format("YYYY-MM-DD");
+      return dayjs().tz("Asia/Seoul").subtract(i, "day").format("YYYY-MM-DD");
     }).reverse();
 
     const commentCounts: Record<string, number> = recentDates.reduce((acc: Record<string, number>, date: string) => {
@@ -37,14 +42,14 @@ export const GET = async () => {
     }, {} as Record<string, number>);
 
     knowhowData!.forEach((comment: { created_at: string }) => {
-      const date = dayjs(comment.created_at).format("YYYY-MM-DD");
+      const date = dayjs(comment.created_at).tz("Asia/Seoul").format("YYYY-MM-DD");
       if (commentCounts[date] !== undefined) {
         commentCounts[date]++;
       }
     });
 
     voteData!.forEach((comment: { created_at: string }) => {
-      const date = dayjs(comment.created_at).format("YYYY-MM-DD");
+      const date = dayjs(comment.created_at).tz("Asia/Seoul").format("YYYY-MM-DD");
       if (commentCounts[date] !== undefined) {
         commentCounts[date]++;
       }

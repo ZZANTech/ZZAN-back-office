@@ -1,3 +1,4 @@
+import { getStartAndEndOfDay } from "@/utils/getDate";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
@@ -5,9 +6,7 @@ export const GET = async () => {
   const supabase = createClient();
 
   try {
-    const today = new Date();
-    const startOfDay = new Date(today.setHours(0, 0, 0, 0)).toISOString();
-    const endOfDay = new Date(today.setHours(23, 59, 59, 999)).toISOString();
+    const { startOfDay, endOfDay } = getStartAndEndOfDay();
 
     const [votePostResult, knowhowPostResult] = await Promise.all([
       supabase.from("vote_comments").select("created_at").gte("created_at", startOfDay).lte("created_at", endOfDay),

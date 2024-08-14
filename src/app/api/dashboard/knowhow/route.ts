@@ -3,6 +3,11 @@ import { getStartDate, getTimeRange } from "@/utils/getDate";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const GET = async () => {
   const supabase = createClient();
@@ -27,16 +32,16 @@ export const GET = async () => {
     console.log("supabase data", data);
 
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
-      return dayjs().subtract(i, "day").format("YYYY-MM-DD");
+      return dayjs().subtract(i, "day").tz("Asia/Seoul").format("YYYY-MM-DD");
     }).reverse();
 
-    const postCounts: Record<string, number> = recentDates.reduce((acc: Record<string, number>, date: string) => {
+    const postCounts: Record<string, number> = recentDates.reduce((acc, date) => {
       acc[date] = 0;
       return acc;
     }, {} as Record<string, number>);
 
-    data!.forEach((post: { created_at: string }) => {
-      const date = dayjs(post.created_at).format("YYYY-MM-DD");
+    data!.forEach((post) => {
+      const date = dayjs(post.created_at).tz("Asia/Seoul").format("YYYY-MM-DD");
       if (postCounts[date] !== undefined) {
         postCounts[date]++;
       }
