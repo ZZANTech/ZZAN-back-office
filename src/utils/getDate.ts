@@ -8,8 +8,6 @@ dayjs.extend(timezone);
 export const getStartDate = (days: number): string => {
   const date = dayjs().tz("Asia/Seoul").subtract(days, "day").startOf("day");
   const startOfDayUTC = date.utc().format();
-  console.log("Start of Day KST:", date.format());
-  console.log("Start of Day UTC:", startOfDayUTC);
   return startOfDayUTC;
 };
 //
@@ -20,11 +18,6 @@ export const getTimeRange = () => {
 
   const startOfDayUTC = startOfDayKST.utc().format();
   const endOfDayUTC = endOfDayKST.utc().format();
-
-  console.log("Start of Day KST:", startOfDayKST.format());
-  console.log("End of Day KST:", endOfDayKST.format());
-  console.log("Start of Day UTC:", startOfDayUTC);
-  console.log("End of Day UTC:", endOfDayUTC);
 
   return { startOfDayUTC, endOfDayUTC };
 };

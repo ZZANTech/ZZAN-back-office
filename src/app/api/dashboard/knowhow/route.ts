@@ -16,6 +16,8 @@ export const GET = async () => {
     const startDate = getStartDate(RECENT_DAYS);
     const { endOfDayUTC } = getTimeRange();
 
+    console.log("Start Date (UTC):", startDate);
+    console.log("End of Day (UTC):", endOfDayUTC);
 
     const { data, error } = await supabase
       .from("knowhow_posts")
