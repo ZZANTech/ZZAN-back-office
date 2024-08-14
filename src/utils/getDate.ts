@@ -8,8 +8,6 @@ dayjs.extend(timezone);
 export const getStartDate = (days: number): string => {
   const date = dayjs().tz("Asia/Seoul").subtract(days, "day").startOf("day");
   const startOfDayUTC = date.utc().format();
-  console.log("Start of Day KST:", date.format());
-  console.log("Start of Day UTC:", startOfDayUTC);
   return startOfDayUTC;
 };
 //
@@ -32,6 +30,7 @@ export const getRecentDates = (days: number): string[] => {
   }
   return dates;
 };
+
 
 export const getStartAndEndOfDay = (timezone: string = "Asia/Seoul", date?: string) => {
   const today = date ? dayjs(date).tz(timezone) : dayjs().tz(timezone);
