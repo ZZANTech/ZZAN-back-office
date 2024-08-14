@@ -38,3 +38,10 @@ export const getRecentDates = (days: number): string[] => {
   }
   return dates;
 };
+
+export const getStartAndEndOfDay = (timezone: string = "Asia/Seoul") => {
+  const today = dayjs().tz(timezone);
+  const startOfDay = today.startOf("day").toISOString();
+  const endOfDay = today.endOf("day").toISOString();
+  return { startOfDay, endOfDay };
+};
