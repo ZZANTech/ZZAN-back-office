@@ -16,6 +16,7 @@ export const GET = async () => {
     const startDate = getStartDate(RECENT_DAYS);
     const { endOfDayUTC } = getTimeRange();
 
+
     const { data, error } = await supabase
       .from("knowhow_posts")
       .select("created_at")
@@ -25,6 +26,8 @@ export const GET = async () => {
     if (error) {
       throw new Error("게시글 목록을 받아오지 못했습니다");
     }
+
+    console.log("supabase data", data);
 
     const recentDates = Array.from({ length: RECENT_DAYS }, (_, i) => {
       return dayjs().subtract(i, "day").tz("Asia/Seoul").format("YYYY-MM-DD");
@@ -41,6 +44,8 @@ export const GET = async () => {
         postCounts[date]++;
       }
     });
+
+    console.log("Post Counts by Date:", postCounts);
 
     return NextResponse.json(postCounts);
   } catch (e) {
