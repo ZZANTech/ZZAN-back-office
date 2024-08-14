@@ -21,6 +21,11 @@ export const getTimeRange = () => {
   const startOfDayUTC = startOfDayKST.utc().format();
   const endOfDayUTC = endOfDayKST.utc().format();
 
+  console.log("Start of Day KST:", startOfDayKST.format());
+  console.log("End of Day KST:", endOfDayKST.format());
+  console.log("Start of Day UTC:", startOfDayUTC);
+  console.log("End of Day UTC:", endOfDayUTC);
+
   return { startOfDayUTC, endOfDayUTC };
 };
 
@@ -28,6 +33,7 @@ export const getRecentDates = (days: number): string[] => {
   const dates: string[] = [];
   for (let i = days - 1; i >= 0; i--) {
     const date = dayjs().tz("Asia/Seoul").subtract(i, "day").startOf("day").format("YYYY-MM-DD");
+
     dates.push(date);
   }
   return dates;
