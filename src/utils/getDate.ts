@@ -26,14 +26,14 @@ export const getRecentDates = (days: number): string[] => {
   const dates: string[] = [];
   for (let i = days - 1; i >= 0; i--) {
     const date = dayjs().tz("Asia/Seoul").subtract(i, "day").startOf("day").format("YYYY-MM-DD");
-
     dates.push(date);
   }
   return dates;
 };
 
-export const getStartAndEndOfDay = (timezone: string = "Asia/Seoul") => {
-  const today = dayjs().tz(timezone);
+
+export const getStartAndEndOfDay = (timezone: string = "Asia/Seoul", date?: string) => {
+  const today = date ? dayjs(date).tz(timezone) : dayjs().tz(timezone);
   const startOfDay = today.startOf("day").toISOString();
   const endOfDay = today.endOf("day").toISOString();
   return { startOfDay, endOfDay };

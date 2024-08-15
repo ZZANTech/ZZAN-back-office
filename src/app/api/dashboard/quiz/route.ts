@@ -1,20 +1,19 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
-import dayjs from "dayjs";
+import { getStartAndEndOfDay } from "@/utils/getDate";
 
 export const GET = async (req: NextRequest) => {
   const supabase = createClient();
 
   try {
-    let date = req.nextUrl.searchParams.get("date");
-    if (!date) {
-      date = dayjs().format("YYYY-MM-DD");
-    }
+    let date = req.nextUrl.searchParams.get("date") || undefined;
 
-    const startOfDay = dayjs(date).startOf("day").toISOString();
-    const endOfDay = dayjs(date).endOf("day").toISOString();
+    const { startOfDay, endOfDay } = getStartAndEndOfDay("Asia/Seoul", date);
 
-    const { data: quizzes, error: quizError } = await supabase.from("quizzes").select("quizId").eq("issue_date", date);
+    const { data: quizzes, error: quizError } = await supabase
+      .from("quizzes")
+      .select("quizId")
+      .eq("issue_date", date || startOfDay.split("T")[0]);
 
     if (quizError) {
       throw new Error("퀴즈 데이터를 가져오는 중 오류가 발생했습니다.");
@@ -37,7 +36,7 @@ export const GET = async (req: NextRequest) => {
     const incorrectCount = answers.filter((answer) => answer.answer === false).length;
 
     return NextResponse.json({
-      date,
+      date: date || startOfDay.split("T")[0],
       correct: correctCount,
       incorrect: incorrectCount
     });
