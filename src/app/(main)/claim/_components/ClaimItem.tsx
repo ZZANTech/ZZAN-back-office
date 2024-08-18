@@ -8,7 +8,6 @@ import ToggleButton from "@/components/ToggleButton";
 function ClaimItem({ claim }: { claim: TClaim }) {
   const { formattedDate, formattedTime } = formatTime(claim.created_at);
   const sentAtFormatted = claim.sent_at ? formatTime(claim.sent_at) : { formattedDate: "-", formattedTime: "-" };
-  console.log(claim);
   const { formattedDate: sentAtDate, formattedTime: sentAtTime } = sentAtFormatted;
   const { updateClaim } = useClaimMutation();
 

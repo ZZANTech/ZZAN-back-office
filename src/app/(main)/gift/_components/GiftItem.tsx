@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import useGiftMutation from "@/store/queries/gift/useGiftMutation";
 import { Tables } from "@/types/supabase";
 import { displayConfirmationDialogWithInput, displayErrorDialog, displaySuccessDialog } from "@/utils/sweetAlert";

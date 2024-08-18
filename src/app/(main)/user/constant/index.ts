@@ -4,3 +4,5 @@ export const USER_SELECT_ITEMS = [
   { value: "email", label: "이메일" },
   { value: "id", label: "ID" }
 ];
+
+export const USER_HEADERS = ["ID", "Email", "닉네임", "Provider", "Total Point", "Current Point", "Role", ""];

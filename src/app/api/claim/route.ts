@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
@@ -28,8 +27,6 @@ export const GET = async (req: NextRequest) => {
       const totalPages = Math.ceil(totalCount / limit);
       const cleanedData = giftClaims.map(({ total_count, ...rest }) => rest);
 
-      revalidatePath("/");
-      console.log(cleanedData);
       return NextResponse.json({ data: cleanedData, totalPages });
     } else {
       return NextResponse.json({ data: [], totalPages: 0 });

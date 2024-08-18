@@ -1,7 +1,7 @@
 "use client";
 
 import { LineChart, Line, XAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { UseQueryResult } from "@tanstack/react-query";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import CustomTooltip from "@/app/(main)/_components/CustomBarChart/CustomTooltip";
 import dayjs from "dayjs";
