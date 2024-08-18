@@ -7,27 +7,28 @@ import { QUIZ_PAGE_LIMIT } from "@/app/(main)/quiz/_constant";
 import PaginationContainer from "@/components/PaginationContainer";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import TableContainer from "@/components/TableContainer";
+import { TQuiz } from "@/types/quiz.type";
+import QuizItem from "@/app/(main)/quiz/_components/QuizItem";
+
+const quizHeader = ["퀴즈 ID", "발행일자", "문제", "해설", "정답", "수정"];
 
 function QuizContainer() {
   const router = useRouter();
-
-  const [page, setPage] = useState(1);
-
-  const { data: quizzes, isLoading } = useQuizzesQuery(page, QUIZ_PAGE_LIMIT);
-
-  const handlePageChange = (newPage: number) => setPage(newPage);
-
+  const query = useQuizzesQuery;
   const handleWriteClick = () => {
     router.push(`/quiz/write`);
   };
 
   return (
     <section>
-      <div>
-        <Button onClick={handleWriteClick}>퀴즈 등록</Button>
-      </div>
-      {isLoading ? <p>Loading...</p> : quizzes && <QuizList quizzes={quizzes.data} />}
-      <PaginationContainer currentPage={page} onPageChange={handlePageChange} totalPages={quizzes?.totalPages || 1} />
+      <Button onClick={handleWriteClick}>퀴즈 등록</Button>
+      <TableContainer<TQuiz>
+        useQuery={query}
+        renderRow={(quiz: TQuiz) => <QuizItem key={quiz.quizId} quiz={quiz} />}
+        headers={quizHeader}
+        pageLimit={QUIZ_PAGE_LIMIT}
+      />
     </section>
   );
 }
