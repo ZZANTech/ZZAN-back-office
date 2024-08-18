@@ -1,57 +1,24 @@
 "use client";
 
-import VoteList from "@/app/(main)/vote/_components/VoteList";
 import { VOTE_PAGE_LIMIT } from "@/app/(main)/vote/_constant";
-import PaginationContainer from "@/components/PaginationContainer";
 import useVotesQuery from "@/store/queries/vote/useVotesQuery";
-import { useState } from "react";
-import SearchBar from "@/components/SearchBar";
 import { POST_SELECT_ITEMS } from "@/app/(main)/knowhow/_constant";
+import TableContainer from "@/components/TableContainer";
+import { TVote } from "@/types/vote.type";
+import VoteItem from "@/app/(main)/vote/_components/VoteItem";
+
+const voteHeader = ["짠 소비 아이디", "작성 일시", "제목", "작성자 닉네임", "게시글 규제"];
 
 function VoteContainer() {
-  const [page, setPage] = useState(1);
-  const [selectedSearchOption, setSelectedSearchOption] = useState("titleContent");
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const [searchParams, setSearchParams] = useState({ option: "titleContent", keyword: "" });
-
-  const { data: votes, isLoading } = useVotesQuery(page, VOTE_PAGE_LIMIT, searchParams.option, searchParams.keyword);
-
-  const handlePageChange = (newPage: number) => setPage(newPage);
-
-  const handleSearchOptionChange = (value: string) => {
-    setSelectedSearchOption(value);
-  };
-
-  const handleSearchKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value);
-  };
-
-  const handleSearch = () => {
-    setPage(1);
-    setSearchParams({ option: selectedSearchOption, keyword: searchKeyword });
-  };
-
+  const query = useVotesQuery;
   return (
-    <section>
-      <SearchBar
-        selectedSearchOption={selectedSearchOption}
-        searchKeyword={searchKeyword}
-        onSearchOptionChange={handleSearchOptionChange}
-        onSearchKeywordChange={handleSearchKeywordChange}
-        onSearch={handleSearch}
-        selectItems={POST_SELECT_ITEMS}
-      />
-      {isLoading ? (
-        <p>로딩 중 입니다.</p>
-      ) : votes && votes.data.length > 0 ? (
-        <>
-          <VoteList votes={votes.data} />
-          <PaginationContainer currentPage={page} onPageChange={handlePageChange} totalPages={votes?.totalPages || 1} />
-        </>
-      ) : (
-        <p>결과가 없습니다.</p>
-      )}
-    </section>
+    <TableContainer<TVote>
+      useQuery={query}
+      renderRow={(vote: TVote) => <VoteItem key={vote.vote_postId} vote={vote} />}
+      headers={voteHeader}
+      pageLimit={VOTE_PAGE_LIMIT}
+      searchOptions={POST_SELECT_ITEMS}
+    />
   );
 }
 
