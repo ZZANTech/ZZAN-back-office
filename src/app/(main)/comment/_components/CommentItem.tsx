@@ -1,13 +1,11 @@
-import { useState } from "react";
-import { createPortal } from "react-dom";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { TComment } from "@/types/comment";
 import CommentTooltip from "@/app/(main)/comment/_components/CommentTooltip";
 import Link from "next/link";
 import { ZZAN_BASE_URL } from "@/constants";
 import { formatTime } from "@/utils/formatNumber";
-import BanToggleButton from "@/components/BanToggleButton";
 import useCommentMutation from "@/store/queries/comment/useCommentMutation";
+import ToggleButton from "@/components/ToggleButton";
 
 function CommentItem({ comment }: { comment: TComment }) {
   const { updateCommentStatus } = useCommentMutation();
@@ -22,10 +20,10 @@ function CommentItem({ comment }: { comment: TComment }) {
       is_banned: newBanStatus
     });
   };
-  return (
-    <TableRow className=" text-center">
-      <TableCell>{comment.comment_id}</TableCell>
 
+  return (
+    <TableRow className="text-center">
+      <TableCell>{comment.comment_id}</TableCell>
       <TableCell>
         <Link
           href={postURL}
@@ -37,20 +35,23 @@ function CommentItem({ comment }: { comment: TComment }) {
         </Link>
       </TableCell>
       <TableCell>{comment.type}</TableCell>
-
       <TableCell>{formattedDate}</TableCell>
       <TableCell>{formattedTime}</TableCell>
       <TableCell>{comment.nickname}</TableCell>
-
       <TableCell className="truncate max-w-3xl">
         <CommentTooltip content={comment.content}>
           <div className="truncate cursor-pointer">{comment.content}</div>
         </CommentTooltip>
       </TableCell>
-
       <TableCell>{comment.is_banned ? "중지됨" : "게시됨"}</TableCell>
       <TableCell>
-        <BanToggleButton isBanned={comment.is_banned} onToggleBan={handleToggleBan} />
+        <ToggleButton
+          isActive={comment.is_banned}
+          onToggle={handleToggleBan}
+          actionText={comment.is_banned ? "재게시" : "게시 중지"}
+          successMessage="게시 중지가 성공적으로 처리되었습니다."
+          revertMessage="재게시가 성공적으로 처리되었습니다."
+        />
       </TableCell>
     </TableRow>
   );

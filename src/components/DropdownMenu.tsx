@@ -20,7 +20,12 @@ function DropdownMenu({ buttonLabel, items }: DropdownMenuProps) {
           {buttonLabel}
         </MenuButton>
       </div>
-      <MenuItems className="absolute right-0 mt-2 w-56 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+      <MenuItems
+        className={clsx(
+          "fixed right-0 mt-2 w-56 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50",
+          "transform translate-x-[-84px]"
+        )}
+      >
         <div className="py-1">
           {items.map((item, index) => (
             <MenuItem

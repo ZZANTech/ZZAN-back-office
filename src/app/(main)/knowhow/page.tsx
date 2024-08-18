@@ -1,11 +1,7 @@
 import KnowhowContainer from "@/app/(main)/knowhow/_components/KnowhowContainer";
 
 function KnowhowListPage() {
-  return (
-    <main>
-      <KnowhowContainer />
-    </main>
-  );
+  return <KnowhowContainer />;
 }
 
 export default KnowhowListPage;

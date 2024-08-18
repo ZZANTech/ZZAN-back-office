@@ -42,9 +42,11 @@ function CommentTooltip({ content, children }: CommentTooltipProps) {
         top = viewportHeight - tooltipHeight - 16;
       }
 
-      setTooltipPosition({ left, top });
+      if (left !== tooltipPosition.left || top !== tooltipPosition.top) {
+        setTooltipPosition({ left, top });
+      }
     }
-  }, [isTooltipVisible, tooltipPosition]);
+  }, [isTooltipVisible]);
 
   return (
     <>

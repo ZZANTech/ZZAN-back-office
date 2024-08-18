@@ -18,8 +18,8 @@ export const GET = async (req: NextRequest) => {
       search_option: searchOption,
       search_keyword: searchKeyword
     });
-
     if (error) {
+      console.log(error);
       throw new Error("기프티콘 신청 내역을 가져오지 못했습니다.");
     }
 
@@ -29,6 +29,7 @@ export const GET = async (req: NextRequest) => {
       const cleanedData = giftClaims.map(({ total_count, ...rest }) => rest);
 
       revalidatePath("/");
+      console.log(cleanedData);
       return NextResponse.json({ data: cleanedData, totalPages });
     } else {
       return NextResponse.json({ data: [], totalPages: 0 });
