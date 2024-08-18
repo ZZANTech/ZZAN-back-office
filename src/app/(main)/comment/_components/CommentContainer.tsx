@@ -4,7 +4,7 @@ import CommentItem from "@/app/(main)/comment/_components/CommentItem";
 import { COMMENT_HEADERS, COMMENT_PAGE_LIMIT, COMMENT_SELECT_ITEMS } from "@/app/(main)/comment/constant";
 import TableContainer from "@/components/TableContainer";
 import useCommentsQuery from "@/store/queries/comment/useCommentsQuery";
-import { TComment } from "@/types/comment";
+import { TComment } from "@/types/comment.type";
 
 function CommentContainer() {
   const query = useCommentsQuery;

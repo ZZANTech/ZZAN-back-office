@@ -1,5 +1,5 @@
 import { TableCell, TableRow } from "@/components/ui/table";
-import { TComment } from "@/types/comment";
+import { TComment } from "@/types/comment.type";
 import CommentTooltip from "@/app/(main)/comment/_components/CommentTooltip";
 import Link from "next/link";
 import { ZZAN_BASE_URL } from "@/constants";
