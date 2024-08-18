@@ -174,10 +174,10 @@ function GiftForm({ previousGift }: GiftFormProps) {
             </div>
             <div className="flex justify-end mt-6">
               <Button type="button" variant="outline" className="mr-2" onClick={handleCancel}>
-                Cancel
+                취소하기
               </Button>
-              <Button type="submit" variant="destructive">
-                Save
+              <Button type="submit" variant="default">
+                저장하기
               </Button>
             </div>
           </form>
