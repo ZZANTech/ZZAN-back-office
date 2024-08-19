@@ -13,7 +13,7 @@ function QuizContainer() {
   const query = useQuizzesQuery;
 
   return (
-    <section>
+    <>
       <Link
         href="/quiz/write"
         className={clsx(
@@ -29,7 +29,7 @@ function QuizContainer() {
         headers={QUIZ_HEADER}
         pageLimit={QUIZ_PAGE_LIMIT}
       />
-    </section>
+    </>
   );
 }
 
