@@ -3,8 +3,8 @@ import Link from "next/link";
 import { TableCell, TableRow } from "@/components/ui/table";
 import useKnowhowMutation from "@/store/queries/knowhow/useKnowhowMutation";
 import { formatTime } from "@/utils/formatNumber";
-import BanToggleButton from "@/components/BanToggleButton";
 import { TKnowhow } from "@/types/knowhow.type";
+import ToggleButton from "@/components/ToggleButton";
 
 function KnowhowItem({ knowhow }: { knowhow: TKnowhow }) {
   const { formattedDate } = formatTime(knowhow.created_at);
@@ -34,7 +34,13 @@ function KnowhowItem({ knowhow }: { knowhow: TKnowhow }) {
       </TableCell>
       <TableCell>{knowhow.users.nickname}</TableCell>
       <TableCell>
-        <BanToggleButton isBanned={isBanned} onToggleBan={handleToggleBan} />
+        <ToggleButton
+          isActive={isBanned}
+          onToggle={handleToggleBan}
+          actionText={isBanned ? "재게시" : "게시 중지"}
+          successMessage="게시 중지가 성공적으로 처리되었습니다."
+          revertMessage="재게시가 성공적으로 처리되었습니다."
+        />
       </TableCell>
     </TableRow>
   );

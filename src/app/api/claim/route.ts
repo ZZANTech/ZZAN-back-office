@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
@@ -18,8 +17,8 @@ export const GET = async (req: NextRequest) => {
       search_option: searchOption,
       search_keyword: searchKeyword
     });
-
     if (error) {
+      console.log(error);
       throw new Error("기프티콘 신청 내역을 가져오지 못했습니다.");
     }
 
@@ -28,7 +27,6 @@ export const GET = async (req: NextRequest) => {
       const totalPages = Math.ceil(totalCount / limit);
       const cleanedData = giftClaims.map(({ total_count, ...rest }) => rest);
 
-      revalidatePath("/");
       return NextResponse.json({ data: cleanedData, totalPages });
     } else {
       return NextResponse.json({ data: [], totalPages: 0 });

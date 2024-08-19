@@ -3,8 +3,8 @@ import Link from "next/link";
 import { TableCell, TableRow } from "@/components/ui/table";
 import useVoteMutation from "@/store/queries/vote/useVoteMutation";
 import { formatTime } from "@/utils/formatNumber";
-import BanToggleButton from "@/components/BanToggleButton";
 import { TVote } from "@/types/vote.type";
+import ToggleButton from "@/components/ToggleButton";
 
 function VoteItem({ vote }: { vote: TVote }) {
   const { formattedDate } = formatTime(vote.created_at);
@@ -35,7 +35,13 @@ function VoteItem({ vote }: { vote: TVote }) {
       </TableCell>
       <TableCell>{vote.users.nickname}</TableCell>
       <TableCell>
-        <BanToggleButton isBanned={isBanned} onToggleBan={handleToggleBan} />
+        <ToggleButton
+          isActive={isBanned}
+          onToggle={handleToggleBan}
+          actionText={isBanned ? "재게시" : "게시 중지"}
+          successMessage="게시 중지가 성공적으로 처리되었습니다."
+          revertMessage="재게시가 성공적으로 처리되었습니다."
+        />
       </TableCell>
     </TableRow>
   );

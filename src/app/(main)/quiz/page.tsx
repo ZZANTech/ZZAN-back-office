@@ -1,11 +1,7 @@
 import QuizContainer from "@/app/(main)/quiz/_components/QuizContainer";
 
 function QuizListPage() {
-  return (
-    <main>
-      <QuizContainer />
-    </main>
-  );
+  return <QuizContainer />;
 }
 
 export default QuizListPage;

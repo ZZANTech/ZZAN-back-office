@@ -83,7 +83,6 @@ export const DELETE = async (req: NextRequest, { params: { giftId } }: { params:
   try {
     if (giftId) {
       const { status, statusText } = await supabase.from("gifts").delete().eq("giftId", giftId);
-
       return NextResponse.json({ status, statusText });
     }
   } catch (e) {
