@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/constants";
-import { TCommentBlockReq } from "@/types/comment";
+import { TCommentBlockReq } from "@/types/comment.type";
 
 export const getComments = async (
   page: number = 1,

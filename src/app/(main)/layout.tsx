@@ -3,11 +3,11 @@ import { ReactNode } from "react";
 
 function MainLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen">
-      <div className="w-64 h-screen bg-gray-800">
+    <div className="grid grid-cols-[16rem_1fr] min-h-screen">
+      <div className="w-64 h-screen  bg-gray-800">
         <SidebarContainer />
       </div>
-      <main className="flex-1 h-full">{children}</main>
+      <main className="w-full h-full flex flex-col items-center ">{children}</main>
     </div>
   );
 }

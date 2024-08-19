@@ -1,5 +1,5 @@
 import { getComments } from "@/apis/comment";
-import { TCommentResponse } from "@/types/comment";
+import { TCommentResponse } from "@/types/comment.type";
 import { useQuery } from "@tanstack/react-query";
 
 const useCommentsQuery = (

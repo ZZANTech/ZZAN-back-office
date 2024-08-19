@@ -1,65 +1,22 @@
 "use client";
 
-import KnowhowList from "@/app/(main)/knowhow/_components/KnowhowList";
-import { KNOWHOW_PAGE_LIMIT, POST_SELECT_ITEMS } from "@/app/(main)/knowhow/_constant";
-import PaginationContainer from "@/components/PaginationContainer";
+import { KNOWHOW_HEADERS, KNOWHOW_PAGE_LIMIT, POST_SELECT_ITEMS } from "@/app/(main)/knowhow/_constant";
 import useKnowhowsQuery from "@/store/queries/knowhow/useKnowhowsQuery";
-import { useState } from "react";
-import SearchBar from "@/components/SearchBar";
+import TableContainer from "@/components/TableContainer";
+import { TKnowhow } from "@/types/knowhow.type";
+import KnowhowItem from "@/app/(main)/knowhow/_components/KnowhowItem";
 
 function KnowhowContainer() {
-  const [page, setPage] = useState(1);
-  const [selectedSearchOption, setSelectedSearchOption] = useState("titleContent");
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const [searchParams, setSearchParams] = useState({ option: "titleContent", keyword: "" });
-
-  const { data: knowhows, isLoading } = useKnowhowsQuery(
-    page,
-    KNOWHOW_PAGE_LIMIT,
-    searchParams.option,
-    searchParams.keyword
-  );
-
-  const handlePageChange = (newPage: number) => setPage(newPage);
-
-  const handleSearchOptionChange = (value: string) => {
-    setSelectedSearchOption(value);
-  };
-
-  const handleSearchKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value);
-  };
-
-  const handleSearch = () => {
-    setPage(1);
-    setSearchParams({ option: selectedSearchOption, keyword: searchKeyword });
-  };
+  const query = useKnowhowsQuery;
 
   return (
-    <section>
-      <SearchBar
-        selectedSearchOption={selectedSearchOption}
-        searchKeyword={searchKeyword}
-        onSearchOptionChange={handleSearchOptionChange}
-        onSearchKeywordChange={handleSearchKeywordChange}
-        onSearch={handleSearch}
-        selectItems={POST_SELECT_ITEMS}
-      />
-      {isLoading ? (
-        <p>로딩 중 입니다.</p>
-      ) : knowhows && knowhows.data.length > 0 ? (
-        <>
-          <KnowhowList knowhows={knowhows.data} />
-          <PaginationContainer
-            currentPage={page}
-            onPageChange={handlePageChange}
-            totalPages={knowhows?.totalPages || 1}
-          />
-        </>
-      ) : (
-        <p>결과가 없습니다.</p>
-      )}
-    </section>
+    <TableContainer<TKnowhow>
+      useQuery={query}
+      renderRow={(knowhow: TKnowhow) => <KnowhowItem key={knowhow.knowhow_postId} knowhow={knowhow} />}
+      headers={KNOWHOW_HEADERS}
+      pageLimit={KNOWHOW_PAGE_LIMIT}
+      searchOptions={POST_SELECT_ITEMS}
+    />
   );
 }
 

@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 import useClaimMutation from "@/store/queries/claim/useClaimMutation";
 import { TClaim } from "@/types/claim.type";
 import { formatTime } from "@/utils/formatNumber";
-import { MouseEventHandler } from "react";
+import ToggleButton from "@/components/ToggleButton";
 
 function ClaimItem({ claim }: { claim: TClaim }) {
   const { formattedDate, formattedTime } = formatTime(claim.created_at);
@@ -11,13 +11,11 @@ function ClaimItem({ claim }: { claim: TClaim }) {
   const { formattedDate: sentAtDate, formattedTime: sentAtTime } = sentAtFormatted;
   const { updateClaim } = useClaimMutation();
 
-  const handleChangeIsSent: MouseEventHandler<HTMLButtonElement> = async () => {
-    const { nickname, email, gift_name, ...rest } = claim;
-    const updatedClaim: Partial<TClaim> = {
-      ...rest,
-      is_sent: !claim.is_sent
-    };
-    await updateClaim(updatedClaim);
+  const handleToggleClaim = async (newStatus: boolean) => {
+    await updateClaim({
+      ...claim,
+      is_sent: newStatus
+    });
   };
 
   return (
@@ -32,9 +30,14 @@ function ClaimItem({ claim }: { claim: TClaim }) {
       <TableCell>{sentAtDate}</TableCell>
       <TableCell>{sentAtTime}</TableCell>
       <TableCell>
-        <Button onClick={handleChangeIsSent} size={"sm"} variant={"destructive"}>
-          상태 바꾸는 버튼
-        </Button>
+        <ToggleButton
+          type="claim"
+          isActive={claim.is_sent}
+          onToggle={handleToggleClaim}
+          actionText={claim.is_sent ? "발송 취소" : "발송 완료"}
+          successMessage={`발송 상태가 "완료" 로 변경되었습니다`}
+          revertMessage={`발송 상태가 "대기중" 으로 변경되었습니다 `}
+        />
       </TableCell>
     </TableRow>
   );

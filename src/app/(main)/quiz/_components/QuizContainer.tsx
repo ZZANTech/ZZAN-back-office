@@ -1,34 +1,35 @@
 "use client";
 
-import { useState } from "react";
-import QuizList from "@/app/(main)/quiz/_components/QuizList";
 import useQuizzesQuery from "@/store/queries/quiz/useQuizzesQuery";
-import { QUIZ_PAGE_LIMIT } from "@/app/(main)/quiz/_constant";
-import PaginationContainer from "@/components/PaginationContainer";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { QUIZ_HEADER, QUIZ_PAGE_LIMIT } from "@/app/(main)/quiz/_constant";
+import { buttonVariants } from "@/components/ui/button";
+import TableContainer from "@/components/TableContainer";
+import { TQuiz } from "@/types/quiz.type";
+import QuizItem from "@/app/(main)/quiz/_components/QuizItem";
+import Link from "next/link";
+import clsx from "clsx";
 
 function QuizContainer() {
-  const router = useRouter();
-
-  const [page, setPage] = useState(1);
-
-  const { data: quizzes, isLoading } = useQuizzesQuery(page, QUIZ_PAGE_LIMIT);
-
-  const handlePageChange = (newPage: number) => setPage(newPage);
-
-  const handleWriteClick = () => {
-    router.push(`/quiz/write`);
-  };
+  const query = useQuizzesQuery;
 
   return (
-    <section>
-      <div>
-        <Button onClick={handleWriteClick}>퀴즈 등록</Button>
-      </div>
-      {isLoading ? <p>Loading...</p> : quizzes && <QuizList quizzes={quizzes.data} />}
-      <PaginationContainer currentPage={page} onPageChange={handlePageChange} totalPages={quizzes?.totalPages || 1} />
-    </section>
+    <>
+      <Link
+        href="/quiz/write"
+        className={clsx(
+          buttonVariants({ variant: "default", size: "icon" }),
+          "fixed bottom-10 right-10 w-14 h-14 flex items-center justify-center !text-2xl !rounded-full"
+        )}
+      >
+        +
+      </Link>
+      <TableContainer<TQuiz>
+        useQuery={query}
+        renderRow={(quiz: TQuiz) => <QuizItem key={quiz.quizId} quiz={quiz} />}
+        headers={QUIZ_HEADER}
+        pageLimit={QUIZ_PAGE_LIMIT}
+      />
+    </>
   );
 }
 

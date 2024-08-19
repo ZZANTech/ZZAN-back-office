@@ -1,4 +1,4 @@
-import { TComment } from "@/types/comment";
+import { TComment } from "@/types/comment.type";
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
