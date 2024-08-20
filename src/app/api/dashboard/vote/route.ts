@@ -9,6 +9,13 @@ import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
+import timezone from "dayjs/plugin/timezone";
+
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 export const GET = async () => {
   const supabase = createClient();
 
