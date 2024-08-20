@@ -75,7 +75,7 @@ function TableContainer<T>({ useQuery, renderRow, headers, pageLimit, searchOpti
           <p className="text-gray-500">결과가 없습니다.</p>
         </div>
       ) : (
-        <div className="overflow-x-auto h-[1135px]">
+        <div className="overflow-x-auto min-h-[1135px]">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
