@@ -31,9 +31,24 @@ export const GET = async (req: NextRequest) => {
       throw new Error("유저 목록을 받아오지 못했습니다");
     }
 
+    const usersWithBlockedStatus = await Promise.all(
+      users.map(async (user) => {
+        const { data: authUser, error: authError } = await supabase.auth.admin.getUserById(user.userId);
+
+        if (authError) {
+          return { ...user, is_blocked: null };
+        }
+
+        console.log(authUser);
+        const isBlocked = authUser?.user.user_metadata?.is_blocked || false;
+
+        return { ...user, is_blocked: isBlocked };
+      })
+    );
+
     if (count) {
       const totalPages = Math.ceil(count / limit);
-      return NextResponse.json({ data: users, totalPages });
+      return NextResponse.json({ data: usersWithBlockedStatus, totalPages });
     }
   } catch (e) {
     if (e instanceof Error) {

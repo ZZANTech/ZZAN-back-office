@@ -5,7 +5,7 @@ import { displayConfirmationDialog } from "@/utils/sweetAlert";
 import useUserMutation from "@/store/queries/user/useUserMutation";
 import clsx from "clsx";
 import { displayAddPointsDialog } from "@/utils/sweetAlert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type UserItemProps = {
   user: TUser;
@@ -13,11 +13,9 @@ type UserItemProps = {
 
 function UserItem({ user }: UserItemProps) {
   const { updateUserStatus, updateUserPoint } = useUserMutation();
-  const [isBlocked, setIsBlocked] = useState<true | null>(null);
-
+  const [isBlocked, setIsBlocked] = useState<boolean | null>(null);
   const handleAddPoint = async () => {
     const formValues = await displayAddPointsDialog(user.nickname);
-
     if (formValues) {
       const { points, reason } = formValues;
       const pointsNumber = parseInt(points, 10);
@@ -63,6 +61,10 @@ function UserItem({ user }: UserItemProps) {
       onClick: handleUserAction
     }
   ];
+
+  useEffect(() => {
+    setIsBlocked(user.is_blocked);
+  }, [user.is_blocked]);
 
   return (
     <TableRow
