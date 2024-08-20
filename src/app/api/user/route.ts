@@ -39,7 +39,6 @@ export const GET = async (req: NextRequest) => {
           return { ...user, is_blocked: null };
         }
 
-        console.log(authUser);
         const isBlocked = authUser?.user.user_metadata?.is_blocked || false;
 
         return { ...user, is_blocked: isBlocked };

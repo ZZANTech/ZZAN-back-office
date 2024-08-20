@@ -10,14 +10,13 @@ function ClaimItem({ claim }: { claim: TClaim }) {
   const sentAtFormatted = claim.sent_at ? formatTime(claim.sent_at) : { formattedDate: "-", formattedTime: "-" };
   const { formattedDate: sentAtDate, formattedTime: sentAtTime } = sentAtFormatted;
   const { updateClaim } = useClaimMutation();
-
   const handleToggleClaim = async (newStatus: boolean) => {
+    const { nickname, email, gift_name, ...rest } = claim;
     await updateClaim({
-      ...claim,
+      ...rest,
       is_sent: newStatus
     });
   };
-
   return (
     <TableRow className="text-center">
       <TableCell>{claim.user_id}</TableCell>

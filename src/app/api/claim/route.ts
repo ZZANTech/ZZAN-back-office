@@ -47,7 +47,7 @@ export const PATCH = async (req: NextRequest) => {
     const { status, statusText } = await supabase
       .from("gift_claims")
       .update(updatedClaim)
-      .eq(`gift_claimId`, updatedClaim.gift_claimId)
+      .eq("gift_claimId", updatedClaim.gift_claimId)
       .single();
     return NextResponse.json({ status, statusText });
   } catch (e) {
