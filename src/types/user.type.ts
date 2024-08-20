@@ -1,6 +1,8 @@
 import { Tables } from "@/types/supabase";
 
-export type TUser = Tables<"users">;
+export type TUser = Tables<"users"> & {
+  is_blocked: boolean;
+};
 
 export type TUsersResponse = {
   data: TUser[];
