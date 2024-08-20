@@ -43,14 +43,12 @@ export const GET = async (req: NextRequest) => {
 export const PATCH = async (req: NextRequest) => {
   const supabase = createClient();
   const updatedClaim = await req.json();
-  console.log(updatedClaim);
   try {
     const { status, statusText } = await supabase
       .from("gift_claims")
       .update(updatedClaim)
       .eq("gift_claimId", updatedClaim.gift_claimId)
       .single();
-    console.log(status, statusText);
     return NextResponse.json({ status, statusText });
   } catch (e) {
     if (e instanceof Error) {
