@@ -48,6 +48,8 @@ export const GET = async (req: NextRequest) => {
     if (count) {
       const totalPages = Math.ceil(count / limit);
       return NextResponse.json({ data: usersWithBlockedStatus, totalPages });
+    } else {
+      return NextResponse.json({ data: [], totalPages: 0 });
     }
   } catch (e) {
     if (e instanceof Error) {
