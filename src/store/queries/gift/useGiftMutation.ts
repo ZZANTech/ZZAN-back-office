@@ -1,8 +1,6 @@
-import { patchClaim } from "@/apis/claim";
 import { deleteGift, patchGift, postGift } from "@/apis/gift";
 import { TNewGift } from "@/types/gift.type";
 import { TStatusResponse } from "@/types/index.type";
-import { Tables } from "@/types/supabase";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const useGiftMutation = () => {

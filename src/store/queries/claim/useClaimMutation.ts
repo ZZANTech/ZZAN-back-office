@@ -1,5 +1,4 @@
 import { patchClaim } from "@/apis/claim";
-import { CLAIM_PAGE_LIMIT } from "@/app/(main)/claim/_constant";
 import { TStatusResponse } from "@/types/index.type";
 import { TClaim } from "@/types/claim.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

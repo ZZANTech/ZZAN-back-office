@@ -1,4 +1,3 @@
-import { getClaims } from "@/apis/claim";
 import { getGifts } from "@/apis/gift";
 import { Tables } from "@/types/supabase";
 import { useQuery } from "@tanstack/react-query";
