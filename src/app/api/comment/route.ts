@@ -24,10 +24,7 @@ export const GET = async (req: NextRequest) => {
     }
 
     if (!searchData || searchData.length === 0) {
-      return NextResponse.json(
-        { message: "해당 데이터가 존재하지 않습니다.", data: [], totalPages: 0 },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "해당 데이터가 존재하지 않습니다.", data: [], totalPages: 0 });
     }
 
     const totalCount = (searchData[0] as any)?.total_count || 0;

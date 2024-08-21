@@ -1,6 +1,5 @@
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { Button } from "@/components/ui/button";
-import clsx from "clsx";
 
 type DropdownMenuItem = {
   label: string;

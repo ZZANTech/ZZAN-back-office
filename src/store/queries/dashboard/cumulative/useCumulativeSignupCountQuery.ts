@@ -1,4 +1,4 @@
-import { getCumulativeSignupCount, getSignUpCount } from "@/apis/dashboard";
+import { getCumulativeSignupCount } from "@/apis/dashboard";
 import { useQuery } from "@tanstack/react-query";
 
 const useCumulativeSignupCountQuery = () => {
